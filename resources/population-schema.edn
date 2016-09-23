@@ -1,0 +1,64 @@
+[
+
+;; County
+
+{:db/id #db/id[:db.part/db]
+  :db/ident :map.county/name
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext true
+  :db/doc "A county's name"
+  :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+  :db/ident :map.county/fips
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/doc "A county's fip id"
+  :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+  :db/ident :map.county/geoid
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/unique :db.unique/identity
+  :db/doc "A county's geo id"
+  :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+  :db/ident :map.county/map.state
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc "A county's state reference"
+  :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+  :db/ident :map.county/population
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/one
+  :db/doc "A county's population"
+  :db.install/_attribute :db.part/db}
+
+;; State
+
+{:db/id #db/id[:db.part/db]
+  :db/ident :map.state/name
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext true
+  :db/doc "A state's name"
+  :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+  :db/ident :map.state/fips
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext true
+  :db/doc "A state's fip id"
+  :db.install/_attribute :db.part/db}
+
+
+
+
+
+]

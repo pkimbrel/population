@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/Users/pkimbrel/Local/src/datomic-pro-0.9.5350/bin/repl < src/builddb.clj
