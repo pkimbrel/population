@@ -1,7 +1,5 @@
- (ns population.core
+(ns population.counties
   (:gen-class))
-(require '[clojure.data.csv :as csv]
-         '[clojure.java.io :as io])
 (use 'csv-map.core)
 (use '[datomic.api :only [q db] :as d])
 (use 'clojure.pprint)
@@ -13,11 +11,9 @@
 (defn read-csv "Reads CSV" []
   (parse-csv (slurp "resources/CO-EST00INT-TOT.csv")))
 
-(def id (atom 0))
-
 (defn buildCounty "Builds a county transact from a record" [record]
   (let [state (format "%02d" (read-string (get record "STATE")))
-        county (format "%04d" (read-string (get record "COUNTY")))
+        cou:db/id #db/id[:db.part/user idnty (format "%04d" (read-string (get record "COUNTY")))
         geoid (str state county)]
     {:db/id #db/id[:db.part/user]
      :map.county/name (get record "CTYNAME")
@@ -27,23 +23,29 @@
 
 (defn buildState "Builds a state transact from a record" [record]
   (let [state (format "%02d" (read-string (get record "STATE")))]
-    (swap! id dec)
-    {:db/id (d/tempid :db.part/user)
+    {:db/id #db/id[:db.part/user]
      :map.state/name (get record "STNAME")
      :map.state/fips state
      }))
 
 
+(defn buildTransact "Builds a transact from given record" [record]
+  (cond
+    (= (read-string (get record "COUNTY")) 0) (buildState record)
+    :else (buildCounty record)
+    ))
+
+(read-string "9")
 (get (first (read-csv)) "COUNTY")
 
 (buildState (first (read-csv)))
 (buildCounty (second (read-csv)))
 
+(buildTransact (first (read-csv)))
+(buildTransact (second (read-csv)))
+
 (get (buildState (first (read-csv))) :db/id)
 
-@(d/transact conn (map buildState (filter #(= (read-string (get % "COUNTY")) 0) (read-csv))))
-
-(d/tempid :db.part/user)
 ;;(def users
 ;;  (q '[:find ?e ?login
 ;;       :where

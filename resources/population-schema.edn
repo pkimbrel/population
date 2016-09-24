@@ -1,5 +1,25 @@
 [
 
+;; State
+
+{:db/id #db/id[:db.part/db]
+  :db/ident :map.state/name
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext true
+  :db/doc "A state's name"
+  :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+  :db/ident :map.state/fips
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/unique :db.unique/identity
+  :db/fulltext true
+  :db/doc "A state's fip id"
+  :db.install/_attribute :db.part/db}
+
+
 ;; County
 
 {:db/id #db/id[:db.part/db]
@@ -32,29 +52,20 @@
   :db/doc "A county's state reference"
   :db.install/_attribute :db.part/db}
 
+;; Population
+
 {:db/id #db/id[:db.part/db]
-  :db/ident :map.county/population
+  :db/ident :map.population/amount
   :db/valueType :db.type/long
   :db/cardinality :db.cardinality/one
-  :db/doc "A county's population"
-  :db.install/_attribute :db.part/db}
-
-;; State
-
-{:db/id #db/id[:db.part/db]
-  :db/ident :map.state/name
-  :db/valueType :db.type/string
-  :db/cardinality :db.cardinality/one
-  :db/fulltext true
-  :db/doc "A state's name"
+  :db/doc "An entities's population"
   :db.install/_attribute :db.part/db}
 
 {:db/id #db/id[:db.part/db]
-  :db/ident :map.state/fips
-  :db/valueType :db.type/string
+  :db/ident :map.population/map.county
+  :db/valueType :db.type/ref
   :db/cardinality :db.cardinality/one
-  :db/fulltext true
-  :db/doc "A state's fip id"
+  :db/doc "A county reference"
   :db.install/_attribute :db.part/db}
 
 

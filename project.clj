@@ -5,7 +5,7 @@
             :url "https://opensource.org/licenses/MIT"}
   :dependencies [
                  [org.clojure/clojure "1.8.0"]
-                 [com.datomic/datomic-pro "0.9.5350"]
+                 [com.datomic/datomic-pro "0.9.5394"]
                  [org.clojure/data.csv "0.1.3"]
                  [csv-map "0.1.2"]
                  ]
