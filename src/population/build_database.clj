@@ -30,8 +30,8 @@
 
 (defn buildCounty [record]
   (let [state (format "%02d" (read-string (get record "STATE")))
-        county (format "%04d" (read-string (get record "COUNTY")))
-        geoid (str state county)]
+        county (format "%03d" (read-string (get record "COUNTY")))
+        geoid (str "g" state county)]
     {:db/id (d/tempid :db.part/user)
      :map.county/name (get record "CTYNAME")
      :map.county/fips (read-string (get record "COUNTY"))

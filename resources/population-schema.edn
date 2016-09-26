@@ -54,17 +54,24 @@
 ;; Population
 
 {:db/id #db/id[:db.part/db]
-  :db/ident :map.population/amount
-  :db/valueType :db.type/long
-  :db/cardinality :db.cardinality/one
-  :db/doc "An entities's population"
-  :db.install/_attribute :db.part/db}
-
-{:db/id #db/id[:db.part/db]
   :db/ident :map.population/map.county
   :db/valueType :db.type/ref
   :db/cardinality :db.cardinality/one
   :db/doc "A county reference"
+  :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+  :db/ident :map.population/year
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/one
+  :db/doc "The year of the measure"
+  :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+  :db/ident :map.population/amount
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/one
+  :db/doc "The population value"
   :db.install/_attribute :db.part/db}
 
 
