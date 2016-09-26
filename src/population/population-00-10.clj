@@ -35,18 +35,12 @@
 
 (defn process-year [year] (map #(build-population % year) (filter #(not= (read-string (get % "COUNTY")) 0) (read-csv))))
 
-(process-year 2000)
-
 (defn transact-year [year] @(d/transact conn (process-year year)))
 
-(defn process-years [] (map transact-year (range 2000 2010 1)))
+(defn transact-all [] (map transact-year (range 2000 2010 1)))
 
-(process-years)
+;;(process-year 2000)
+;;(transact-all)
 
 ;; @(d/transact conn (map buildCounty (filter #(not= (read-string (get % "COUNTY")) 0) (read-csv))))
-
-(comment d/transact conn [{:db/id #db/id[:db.part/user -1069389]
-                    :map.population/map.county 17592186047714
-                    :map.population/amount 44021}])
-
 
