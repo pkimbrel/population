@@ -5,7 +5,7 @@
 (def db-uri "datomic:dev://localhost:4334/population")
 ;;(def conn (atom (d/connect db-uri)))
 
-(def population10-csv (csv/parse-csv (slurp "resources/PEP_2015_PEPANNRES_with_ann.csv")))
+(def population15-csv (csv/parse-csv (slurp "resources/PEP_2015_PEPANNRES_with_ann.csv")))
 
 (defn get-county-entity [db geoid]
   (d/q '[:find ?e
@@ -25,17 +25,19 @@
      :map.population/map.county (get-county-id db geoid)
      :map.population/year year
      :map.population/amount (read-string (get record (str "respop7" year)))
-     }))
+      }))
 
 (defn process-year [db year]
-  (filter (comp some? :map.population/map.county) (map
-              #(build-population db year %)
-              population10-csv)))
+  (filter (comp some? :map.population/map.county)
+          (map
+           #(build-population db year %)
+           population15-csv)))
 
 (defn process-years [db]
-  (map #(transact-year db %) (range 2011 2016 1)))
+  (mapcat #(process-year db %) (range 2011 2016 1)))
 
-;;(process-years (d/connect db-uri))
+;;(process-years (d/db (d/connect db-uri)))
+
 
 ;;(defn transact-year [year]
 ;;  @(d/transact @conn (process-year year)))
