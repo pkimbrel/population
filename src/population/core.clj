@@ -28,11 +28,13 @@
 
 ;;(rebuild-database)
 ;;(process-population)
+;;(load-population)
+
+
 
 ;;(pop10/process-years (d/db (d/connect db-uri)))
 ;;(spit "temp.edn" (with-out-str (pr (process-population))))
-(process-population)
-(load-population)
+
 
 
 
