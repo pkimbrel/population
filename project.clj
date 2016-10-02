@@ -1,5 +1,5 @@
 (defproject population-data "0.1.0-SNAPSHOT"
-  :description "Population map, reduce, filter example"
+  :description "Population map, reduce, filter example."
   :url "http://github.com/pkimbrel/population"
   :license {:name "MIT"
             :url "https://opensource.org/licenses/MIT"}
