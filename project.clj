@@ -6,6 +6,7 @@
   :dependencies [
                  [org.clojure/clojure "1.8.0"]
                  [com.datomic/datomic-pro "0.9.5394"]
+                 [com.amazonaws/aws-java-sdk-dynamodb "1.11.43"]
                  [csv-map "0.1.2"]
                  [hiccup "1.0.5"]
                  [compojure "1.5.1"]

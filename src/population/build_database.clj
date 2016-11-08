@@ -1,8 +1,7 @@
 (ns population.build-database
-  (:require [csv-map.core :as csv])
-  (:require [datomic.api :only [q db] :as d]))
-
-(def db-uri "datomic:dev://localhost:4334/population")
+  (:require [csv-map.core :as csv]
+            [datomic.api :only [q db] :as d]
+            [population.config :as config]))
 
 (def schema-tx (read-string (slurp "/Users/pkimbrel/Local/src/population/resources/population-schema.edn")))
 (def county-csv (csv/parse-csv (slurp "resources/CO-EST00INT-TOT.csv")))
@@ -50,13 +49,13 @@
         county-csv)))
 
 (defn reset-database "Resets the database.  NOTE: This will destroy any open connections" []
-  (d/delete-database db-uri)
-  (d/create-database db-uri)
-  @(d/transact (d/connect db-uri) schema-tx)
+  (d/delete-database config/db-uri)
+  (d/create-database config/db-uri)
+  @(d/transact (d/connect config/db-uri) schema-tx)
 )
 
 (defn build-database "Builds the inital database." []
-    (let [conn (d/connect db-uri)]
+    (let [conn (d/connect config/db-uri)]
         @(d/transact conn (process-states))
         @(d/transact conn (process-counties (d/db conn)))))
 

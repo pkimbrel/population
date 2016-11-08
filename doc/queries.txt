@@ -1,0 +1,91 @@
+[:find ?c-id
+ :where
+ [?s-id :map.state/name "Illinois"]
+ [?c-id :map.county/map.state ?s-id]
+ [?c-id :map.county/name "McLean County"]
+ [?p-id :map.population/map.county ?c-id]
+]
+
+
+
+[:find ?c-id
+ :where
+ [?s-id :map.state/name "Illinois"]
+ [?c-id :map.county/map.state ?s-id]
+ [?c-id :map.county/name "McLean County"]
+]
+
+[:find ?c-id
+ :where
+ [?c-id :map.county/geoid "01001"]
+]
+
+
+
+
+[:find ?p-id
+ :where
+ [?p-id :map.population/map.county _]
+]
+
+
+
+[:find ?p-year ?p-amount
+ :where
+ [?s-id :map.state/name "Illinois"]
+ [?c-id :map.county/map.state ?s-id]
+ [?c-id :map.county/name "McLean County"]
+ [?p-id :map.population/map.county ?c-id]
+ [?p-id :map.population/year ?p-year]
+ [?p-id :map.population/amount ?p-amount]
+]
+
+
+[:find ?c-name ?p-amount
+ :where
+ [?s-id :map.state/name "Illinois"]
+ [?c-id :map.county/map.state ?s-id]
+ [?c-id :map.county/name ?c-name]
+ [?p-id :map.population/map.county ?c-id]
+ [?p-id :map.population/year 2000]
+ [?p-id :map.population/amount ?p-amount]
+]
+
+[:find ?c-name ?p-amount
+ :where
+ [?s-id :map.state/name "Illinois"]
+ [?c-id :map.county/map.state ?s-id]
+ [?c-id :map.county/name ?c-name]
+ [?p-id :map.population/map.county ?c-id]
+ [?p-id :map.population/year 2000]
+ [?p-id :map.population/amount ?p-amount]
+]
+
+[:find ?p-year ?p-amount
+ :where
+ [?s-id :map.state/name "Texas"]
+ [?c-id :map.county/map.state ?s-id]
+ [?c-id :map.county/name "Collin County"]
+ [?p-id :map.population/map.county ?c-id]
+ [?p-id :map.population/year ?p-year]
+ [?p-id :map.population/amount ?p-amount]
+]
+
+
+[:find ?c-geoid ?p-amount
+ :where
+ [?c-id :map.county/map.state ?s-id]
+ [?c-id :map.county/name ?c-name]
+ [?c-id :map.county/geoid ?c-geoid]
+ [?p-id :map.population/map.county ?c-id]
+ [?p-id :map.population/year 2000]
+ [?p-id :map.population/amount ?p-amount]
+]
+
+(def population (d/q '[:find ?c-geoid ?p-amount
+ :where
+ [?p-id :map.population/year 2000]
+ [?p-id :map.population/amount ?p-amount]
+ [?c-id :map.county/geoid ?c-geoid]
+] (d/db (d/connect config/db-uri))))
+

@@ -2,8 +2,6 @@
     (:require [csv-map.core :as csv])
     (:require [datomic.api :only [q db] :as d]))
 
-(def db-uri "datomic:dev://localhost:4334/population")
-
 (def population10-csv (csv/parse-csv (slurp "resources/CO-EST00INT-TOT.csv")))
 
 (defn get-county-entity [db geoid]
