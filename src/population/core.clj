@@ -7,6 +7,7 @@
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [population.config :as config]
             [population.build-database :as db]
+            [population.population-90-00 :as pop00]
             [population.population-00-10 :as pop10]
             [population.population-10-15 :as pop15]
             [population.handler :as handler]))
@@ -18,6 +19,7 @@
 (defn process-population []
   (let [db (d/db (d/connect config/db-uri))]
     (concat
+     (pop00/process-years db)
      (pop10/process-years db)
      (pop15/process-years db))))
 
@@ -25,27 +27,31 @@
   @(d/transact (d/connect config/db-uri) datum))
 
 (defn load-population []
-  (apply #(transact %) (vector (process-population))))
-
-(defroutes app-routes
-  (GET "/" [] "<h1>Hello World</h1>")
-  (route/not-found "<h1>Page not found</h1>"))
-
-(def app
-  (wrap-defaults app-routes site-defaults))
-
-(comment defn -main [& args]
-  (jetty/run-jetty app {:port 9080}))
-
-;; (-main)
-
+  (let [db (d/db (d/connect config/db-uri))]
+    (do
+      ;;(apply #(transact %) (vector (pop00/process-year db 90)))
+      ;;(apply #(transact %) (vector (pop00/process-year db 91)))
+      ;;(apply #(transact %) (vector (pop00/process-year db 92)))
+      ;;(apply #(transact %) (vector (pop00/process-year db 93)))
+      ;;(apply #(transact %) (vector (pop00/process-year db 94)))
+      ;;(apply #(transact %) (vector (pop00/process-year db 95)))
+      ;;(apply #(transact %) (vector (pop00/process-year db 96)))
+      ;;(apply #(transact %) (vector (pop00/process-year db 97)))
+      ;;(apply #(transact %) (vector (pop00/process-year db 98)))
+      ;;(apply #(transact %) (vector (pop00/process-year db 99)))
+      (apply #(transact %) (vector (pop10/process-years db)))
+      (apply #(transact %) (vector (pop15/process-years db)))
+      )))
 
 ;;(rebuild-database)
-
-
-;;(process-population)
-
 ;;(load-population)
+
+
+
+
+
+
+
 
 
 
